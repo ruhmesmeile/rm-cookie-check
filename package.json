@@ -1,0 +1,11 @@
+{
+  "name": "rm-cookie-check",
+  "version": "0.0.1",
+  "description": "ruhmesmeile Cookie Check",
+  "author": "Jonas Ulrich <jonas.ulrich@ruhmesmeile.com>",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+  }
+}

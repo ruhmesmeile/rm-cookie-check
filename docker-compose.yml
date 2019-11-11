@@ -1,0 +1,48 @@
+version: "3"
+services:
+  ########################################################
+  # Hydra logint-consent-flow provider for Atlassian Crowd
+  ########################################################
+  cookiecheck:
+    build: .
+    entrypoint: node --inspect-brk=0.0.0.0 ./bin/www
+    container_name: cookiecheck
+    hostname: cookiecheck
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - VIRTUAL_HOST=cookiecheck.ruhmesmeile.machine
+      - VIRTUAL_PORT=3000
+
+  #######################################
+  # PostgreSQL
+  #######################################
+  postgresql:
+    image: postgres:9.4.24
+    container_name: postgresql
+    hostname: postgresql
+    volumes:
+      - postgresqldata:/var/lib/postgresql/data
+      #- ./resources/sql:/docker-entrypoint-initdb.d
+    env_file:
+      - .env
+
+  #######################################
+  # Nginx Reverse Proxy
+  #######################################
+  nginx:
+    image: jwilder/nginx-proxy:0.7.0
+    container_name: nginx
+    hostname: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./resources/certs:/etc/nginx/certs
+
+volumes:
+  postgresqldata:
+    external: false
