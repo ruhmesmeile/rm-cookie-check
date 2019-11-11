@@ -62,3 +62,11 @@ typings/
 
 # Ignore certs
 resources/certs/*
+
+# Additional ignores
+.DS_Store
+node_modules
+yarn-error.log
+/cypress/screenshots/
+/__sapper__/
+pnpm-lock.yaml
